@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MHT-CET 2026 — Countdown of Confidence</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --green-deep:  #1b4332;
+    --green-mid:   #2d6a4f;
+    --green-light: #52b788;
+    --green-pale:  #b7e4c7;
+    --amber:       #f4a261;
+    --amber-deep:  #e76f51;
+    --cream:       #fefae0;
+    --glass:       rgba(255,255,255,0.14);
+    --glass-b:     rgba(255,255,255,0.30);
+    --shadow:      rgba(27,67,50,0.35);
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  /* ── BODY / BACKGROUND ── */
+  body {
+    font-family:'Nunito', sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+    background:
+      radial-gradient(ellipse at 80% 0%,   rgba(244,162,97,0.40) 0%, transparent 45%),
+      radial-gradient(ellipse at 20% 100%, rgba(82,183,136,0.30) 0%, transparent 50%),
+      linear-gradient(165deg, #081c15 0%, #1b4332 28%, #2d6a4f 55%, #74c69d 82%, #d8f3dc 100%);
+    color:#fff;
+    position:relative;
+  }
+
+  /* Animated glow orb */
+  body::before {
+    content:'';
+    position:fixed; top:-100px; right:-100px;
+    width:420px; height:420px;
+    background:radial-gradient(circle, rgba(244,162,97,0.50) 0%, transparent 68%);
+    border-radius:50%;
+    animation:sunPulse 7s ease-in-out infinite;
+    pointer-events:none; z-index:0;
+  }
+  body::after {
+    content:'';
+    position:fixed; bottom:-80px; left:-80px;
+    width:320px; height:320px;
+    background:radial-gradient(circle, rgba(82,183,136,0.30) 0%, transparent 68%);
+    border-radius:50%;
+    animation:sunPulse 9s ease-in-out infinite reverse;
+    pointer-events:none; z-index:0;
+  }
+  @keyframes sunPulse {
+    0%,100%{ transform:scale(1); opacity:.7; }
+    50%    { transform:scale(1.18); opacity:1; }
+  }
+
+  /* ── FLOATING LEAVES ── */
+  .leaves-wrap { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+  .leaf {
+    position:absolute;
+    opacity:0;
+    animation:floatLeaf linear infinite;
+    user-select:none;
+  }
+  @keyframes floatLeaf {
+    0%   { transform:translateY(108vh) rotate(0deg) scale(0.6); opacity:0; }
+    8%   { opacity:.75; }
+    92%  { opacity:.55; }
+    100% { transform:translateY(-12vh) rotate(700deg) scale(1.1); opacity:0; }
+  }
+
+  /* ── LAYOUT ── */
+  .page { position:relative; z-index:1; max-width:880px; margin:0 auto; padding:30px 18px 50px; }
+
+  /* ── HEADER ── */
+  header { text-align:center; margin-bottom:30px; }
+  .badge {
+    display:inline-block;
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.28);
+    border-radius:50px;
+    padding:5px 20px;
+    font-size:.72rem; font-weight:800;
+    letter-spacing:2.5px; text-transform:uppercase;
+    color:var(--green-pale);
+    margin-bottom:14px;
+    backdrop-filter:blur(8px);
+  }
+  header h1 {
+    font-family:'Playfair Display', serif;
+    font-size:clamp(2rem,6.5vw,3.6rem);
+    font-weight:900; line-height:1.12;
+    color:#fff;
+    text-shadow:0 4px 28px rgba(0,0,0,0.40);
+  }
+  header h1 em { color:var(--amber); font-style:normal; }
+
+  .creator-block {
+    margin-top:12px;
+    display:inline-block;
+    background:rgba(255,255,255,0.10);
+    border:1px solid rgba(255,255,255,0.20);
+    border-radius:14px;
+    padding:10px 22px;
+    backdrop-filter:blur(8px);
+  }
+  .creator-block .name {
+    font-weight:800; font-size:.98rem; color:#fff;
+    margin-bottom:2px;
+  }
+  .creator-block .loc {
+    font-size:.78rem; color:var(--green-pale); opacity:.85;
+  }
+
+  /* ── ACTION BUTTONS ROW ── */
+  .actions-row {
+    display:flex; justify-content:center; gap:12px;
+    flex-wrap:wrap; margin-bottom:24px;
+  }
+  .btn {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 24px;
+    border-radius:50px; border:none;
+    font-family:'Nunito', sans-serif;
+    font-weight:800; font-size:.88rem;
+    cursor:pointer; transition:all .22s ease;
+    text-decoration:none; letter-spacing:.3px;
+    white-space:nowrap;
+  }
+  .btn-amber {
+    background:var(--amber); color:var(--green-deep);
+    box-shadow:0 4px 20px rgba(244,162,97,0.45);
+  }
+  .btn-amber:hover { background:#f9b47a; transform:translateY(-2px); box-shadow:0 8px 28px rgba(244,162,97,0.55); }
+  .btn-tg {
+    background:linear-gradient(135deg,#28b6f6,#1a78c2);
+    color:#fff;
+    box-shadow:0 4px 20px rgba(40,182,246,0.40);
+  }
+  .btn-tg:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(40,182,246,0.55); }
+  .btn-primary {
+    background:var(--green-light); color:var(--green-deep);
+    box-shadow:0 4px 20px rgba(82,183,136,0.45);
+  }
+  .btn-primary:hover { background:#6fcf97; transform:translateY(-2px); }
+  .btn-ghost {
+    background:rgba(255,255,255,0.12);
+    border:1.5px solid rgba(255,255,255,0.30);
+    color:#fff; backdrop-filter:blur(8px);
+  }
+  .btn-ghost:hover { background:rgba(255,255,255,0.22); transform:translateY(-2px); }
+
+  /* ── GLASS CARD ── */
+  .card {
+    background:var(--glass);
+    border:1px solid var(--glass-b);
+    border-radius:24px;
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    padding:26px 26px 22px;
+    margin-bottom:20px;
+    box-shadow:0 10px 44px var(--shadow);
+  }
+  .card-title {
+    font-family:'Playfair Display', serif;
+    font-size:1.05rem; font-weight:700;
+    color:var(--green-pale);
+    margin-bottom:16px;
+    display:flex; align-items:center; gap:9px;
+  }
+  .card-title::before {
+    content:''; display:inline-block;
+    width:5px; height:20px;
+    background:var(--amber); border-radius:3px;
+    flex-shrink:0;
+  }
+
+  /* ── DATE GRID ── */
+  .date-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(88px,1fr));
+    gap:9px;
+  }
+  .date-btn {
+    background:rgba(255,255,255,0.10);
+    border:1.5px solid rgba(255,255,255,0.22);
+    border-radius:14px;
+    padding:10px 6px 9px;
+    color:#fff;
+    font-family:'Nunito', sans-serif;
+    font-weight:700; font-size:.82rem;
+    cursor:pointer; transition:all .2s ease;
+    text-align:center; line-height:1.35;
+  }
+  .date-btn .day-num { font-size:1.4rem; font-weight:800; display:block; }
+  .date-btn:hover { background:rgba(255,255,255,0.20); transform:translateY(-2px); }
+  .date-btn.active {
+    background:var(--green-light);
+    border-color:var(--green-light);
+    color:var(--green-deep);
+    box-shadow:0 4px 18px rgba(82,183,136,0.50);
+    transform:translateY(-3px);
+  }
+
+  /* ── SHIFT GRID ── */
+  .shift-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .shift-btn {
+    background:rgba(255,255,255,0.10);
+    border:1.5px solid rgba(255,255,255,0.22);
+    border-radius:18px;
+    padding:18px 10px 14px;
+    color:#fff;
+    font-family:'Nunito', sans-serif;
+    font-weight:700; font-size:.9rem;
+    cursor:pointer; transition:all .22s ease;
+    text-align:center;
+  }
+  .shift-btn .s-icon { font-size:2rem; display:block; margin-bottom:5px; }
+  .shift-btn .s-time { font-size:.72rem; opacity:.72; font-weight:600; display:block; margin-top:3px; }
+  .shift-btn:hover { background:rgba(255,255,255,0.20); transform:translateY(-2px); }
+  .shift-btn.active {
+    background:var(--amber);
+    border-color:var(--amber);
+    color:var(--green-deep);
+    box-shadow:0 4px 20px rgba(244,162,97,0.55);
+    transform:translateY(-3px);
+  }
+
+  /* ── COUNTDOWN ── */
+  .countdown-wrap { text-align:center; padding:8px 0 4px; }
+  .cd-label {
+    font-size:.72rem; letter-spacing:2.5px; text-transform:uppercase;
+    color:var(--green-pale); font-weight:800; margin-bottom:20px; opacity:.85;
+  }
+  .time-blocks {
+    display:flex; justify-content:center; align-items:flex-start;
+    gap:clamp(6px,2.5vw,20px); flex-wrap:wrap;
+  }
+  .t-block { display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .t-num {
+    font-family:'Playfair Display', serif;
+    font-size:clamp(2.6rem,9vw,4.8rem);
+    font-weight:900; line-height:1;
+    background:linear-gradient(155deg, #ffffff 25%, #b7e4c7);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    background-clip:text;
+    min-width:clamp(65px,14vw,105px);
+    text-align:center;
+    transition:transform .12s ease;
+  }
+  .t-num.tick { transform:scale(1.07); }
+  .t-lbl {
+    font-size:.65rem; letter-spacing:2px; text-transform:uppercase;
+    color:var(--green-pale); font-weight:800; opacity:.80;
+  }
+  .t-sep {
+    font-family:'Playfair Display', serif;
+    font-size:clamp(1.8rem,7vw,3.8rem);
+    color:var(--amber); opacity:.65; line-height:1;
+    margin-top:2px;
+    animation:blink 1s step-start infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:.65} 50%{opacity:.12} }
+
+  /* progress */
+  .prog-wrap { background:rgba(255,255,255,0.12); border-radius:50px; height:7px; margin:18px auto 0; max-width:400px; overflow:hidden; }
+  .prog-bar  { height:100%; border-radius:50px; background:linear-gradient(90deg,var(--green-light),var(--amber)); transition:width 1s ease; box-shadow:0 0 10px rgba(82,183,136,0.5); }
+
+  .status-pill {
+    display:inline-block;
+    margin-top:18px; padding:11px 24px;
+    border-radius:50px; font-weight:700; font-size:.88rem;
+    background:rgba(255,255,255,0.10);
+    color:var(--cream); letter-spacing:.4px;
+  }
+  .status-pill.live {
+    background:rgba(231,111,81,0.32);
+    border:1px solid var(--amber-deep);
+    animation:livePulse 1.6s ease-in-out infinite;
+  }
+  .status-pill.done { background:rgba(82,183,136,0.28); border:1px solid var(--green-light); }
+  @keyframes livePulse {
+    0%,100%{box-shadow:0 0 0 0 rgba(231,111,81,0.55)}
+    50%    {box-shadow:0 0 0 14px rgba(231,111,81,0)}
+  }
+
+  .placeholder {
+    text-align:center; padding:14px 0 6px;
+    color:var(--green-pale); opacity:.72; font-size:.92rem; line-height:1.65;
+  }
+  .placeholder span { font-size:2.8rem; display:block; margin-bottom:9px; }
+
+  /* ── QUOTE CARD ── */
+  .quote-card {
+    background:linear-gradient(135deg, rgba(27,67,50,.60), rgba(45,106,79,.35));
+    border:1px solid rgba(82,183,136,.32);
+    position:relative; overflow:hidden;
+  }
+  .quote-card::before {
+    content:'\201C';
+    position:absolute; top:-14px; left:12px;
+    font-family:'Playfair Display', serif;
+    font-size:9rem; color:var(--green-light); opacity:.14;
+    line-height:1; pointer-events:none;
+  }
+  .quote-text {
+    font-family:'Playfair Display', serif;
+    font-style:italic; font-size:clamp(.95rem,2.8vw,1.2rem);
+    line-height:1.75; color:#fff; margin-bottom:12px;
+  }
+  .quote-attr {
+    font-size:.74rem; font-weight:800; letter-spacing:1.8px;
+    text-transform:uppercase; color:var(--amber); opacity:.90;
+  }
+
+  /* ── MODAL ── */
+  .overlay {
+    position:fixed; inset:0;
+    background:rgba(5,20,12,.85);
+    backdrop-filter:blur(12px);
+    display:flex; align-items:center; justify-content:center;
+    z-index:1000; padding:18px;
+    animation:fadeIn .32s ease;
+  }
+  .overlay.hidden { display:none; }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+  .modal {
+    background:linear-gradient(145deg,#1b4332f0,#2d6a4fe8);
+    border:1px solid rgba(255,255,255,0.22);
+    border-radius:28px;
+    max-width:520px; width:100%;
+    padding:36px 30px 28px;
+    box-shadow:0 28px 80px rgba(0,0,0,.55);
+    animation:slideUp .32s ease;
+    max-height:92vh; overflow-y:auto;
+  }
+  @keyframes slideUp { from{transform:translateY(28px);opacity:0} to{transform:translateY(0);opacity:1} }
+
+  .modal-icon { font-size:3rem; text-align:center; margin-bottom:10px; }
+  .modal h2 {
+    font-family:'Playfair Display', serif;
+    font-size:1.55rem; font-weight:900;
+    color:#fff; text-align:center; margin-bottom:6px;
+  }
+  .modal h2 em { color:var(--amber); font-style:normal; }
+  .modal p { color:var(--green-pale); font-size:.9rem; line-height:1.7; }
+  .modal ul { padding-left:18px; margin-top:8px; }
+  .modal ul li { color:var(--green-pale); font-size:.9rem; line-height:1.7; margin-bottom:5px; }
+  .divider { border:none; border-top:1px solid rgba(255,255,255,.14); margin:18px 0; }
+
+  /* resource items */
+  .res-item {
+    display:flex; align-items:flex-start; gap:14px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:16px; padding:15px;
+    margin-bottom:11px; text-decoration:none;
+    transition:all .2s ease;
+  }
+  .res-item:hover { background:rgba(255,255,255,0.16); transform:translateX(4px); }
+  .res-icon { font-size:2.1rem; flex-shrink:0; }
+  .res-info { flex:1; }
+  .res-name { font-weight:800; color:#fff; font-size:.92rem; margin-bottom:2px; }
+  .res-sub  { font-size:.76rem; color:var(--green-pale); line-height:1.45; }
+  .res-tag  {
+    display:inline-block; margin-top:5px;
+    background:rgba(82,183,136,.28); border:1px solid rgba(82,183,136,.38);
+    border-radius:50px; padding:2px 10px;
+    font-size:.66rem; font-weight:800; text-transform:uppercase;
+    letter-spacing:1px; color:var(--green-pale);
+  }
+
+  /* ── FOOTER ── */
+  footer { position:relative; z-index:1; padding:0 18px 32px; text-align:center; }
+  .footer-box {
+    background:rgba(5,20,12,.55);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:20px; padding:20px 22px;
+    max-width:600px; margin:0 auto;
+    backdrop-filter:blur(12px);
+  }
+  .footer-title { font-family:'Playfair Display', serif; font-size:.98rem; font-weight:700; color:#fff; margin-bottom:5px; }
+  .footer-copy { font-size:.72rem; color:var(--green-pale); opacity:.75; line-height:1.7; }
+  .footer-copy a { color:var(--amber); text-decoration:none; }
+
+  @media(max-width:480px){
+    .card { padding:18px 14px 16px; }
+    .modal { padding:24px 16px 20px; }
+    .date-grid { grid-template-columns:repeat(3,1fr); }
+    .shift-grid { grid-template-columns:1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LEAVES -->
+<div class="leaves-wrap" id="leavesWrap"></div>
+
+<!-- ══════════ DISCLAIMER MODAL ══════════ -->
+<div class="overlay" id="modalDisclaimer">
+  <div class="modal">
+    <div class="modal-icon">🌿</div>
+    <h2>Welcome to<br/><em>MHT-CET 2026</em><br/>Countdown of Confidence</h2>
+    <hr class="divider"/>
+    <p><strong style="color:#fff;">⚠️ Important Disclaimer</strong></p>
+    <ul>
+      <li>This is <strong style="color:var(--amber);">NOT an official</strong> MHT-CET or CET Cell website.</li>
+      <li>This site is built by a <strong style="color:#fff;">student, for students</strong> — purely for motivation &amp; exam-day awareness.</li>
+      <li>For official information, visit <strong style="color:#fff;">cetcell.mahacet.org</strong></li>
+      <li>Always verify exam dates &amp; timings from your official admit card.</li>
+    </ul>
+    <hr class="divider"/>
+    <p style="text-align:center;font-size:.84rem;">
+      🚀 Built with ❤️ by <strong style="color:#fff;">Manish Dhangar</strong><br/>
+      A fellow MHT-CET aspirant from <strong style="color:var(--amber);">Dhule, Maharashtra</strong>
+    </p>
+    <div style="text-align:center;margin-top:22px;">
+      <button class="btn btn-primary" onclick="closeModal('modalDisclaimer')">✅ I Understand — Let's Go!</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ RESOURCES MODAL ══════════ -->
+<div class="overlay hidden" id="modalResources">
+  <div class="modal">
+    <div class="modal-icon">📚</div>
+    <h2>My Study <em>Resources</em></h2>
+    <p style="text-align:center;font-size:.84rem;margin-bottom:18px;">
+      Free YouTube resources I personally use for MHT-CET prep 🌿
+    </p>
+
+    <a class="res-item" href="https://youtube.com/@swayamphysics07?si=V2hKMuYsDgrwwAoH" target="_blank" rel="noopener">
+      <div class="res-icon">⚛️</div>
+      <div class="res-info">
+        <div class="res-name">Swayam Physics</div>
+        <div class="res-sub">Clear concepts, MHT-CET &amp; JEE focused Physics lectures by Swayam Sir</div>
+        <div class="res-tag">🎬 YouTube · Free · Physics</div>
+      </div>
+    </a>
+
+    <a class="res-item" href="https://youtube.com/@mahesh_sir?si=h6CZZuh7VAMt75e2" target="_blank" rel="noopener">
+      <div class="res-icon">🧪</div>
+      <div class="res-info">
+        <div class="res-name">Sahyadri Tutorials — Viva Series</div>
+        <div class="res-sub">Mahesh Sir's free Chemistry Viva Series — the best free Chemistry resource for MHT-CET</div>
+        <div class="res-tag">🎬 YouTube · Free · Chemistry</div>
+      </div>
+    </a>
+
+    <div style="text-align:center;margin-top:18px;">
+      <button class="btn btn-ghost" onclick="closeModal('modalResources')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MAIN PAGE ══════════ -->
+<div class="page">
+
+  <!-- HEADER -->
+  <header>
+    <div class="badge">🌱 MHT-CET 2026 · PCM Group · Online Exam</div>
+    <h1>Countdown of<br/><em>Confidence</em> 🎯</h1>
+    <div class="creator-block">
+      <div class="name">✨ Created by Manish Dhangar (19yo)</div>
+      <div class="loc">📍 Student from Dhule, Maharashtra</div>
+    </div>
+  </header>
+
+  <!-- ACTION BUTTONS -->
+  <div class="actions-row">
+    <button class="btn btn-amber" onclick="openModal('modalResources')">📚 My Resources</button>
+    <a class="btn btn-tg" href="https://t.me/devmanus2025" target="_blank" rel="noopener">
+      ✈️ Contact on Telegram
+    </a>
+  </div>
+
+  <!-- DATE SELECTOR -->
+  <div class="card">
+    <div class="card-title">Select Your Exam Date</div>
+    <div class="date-grid" id="dateGrid"></div>
+  </div>
+
+  <!-- SHIFT SELECTOR -->
+  <div class="card">
+    <div class="card-title">Select Your Shift</div>
+    <div class="shift-grid">
+      <button class="shift-btn" id="btnMorning" onclick="selectShift('morning')">
+        <span class="s-icon">🌅</span>
+        Morning Shift
+        <span class="s-time">9:00 AM — 12:00 PM</span>
+      </button>
+      <button class="shift-btn" id="btnAfternoon" onclick="selectShift('afternoon')">
+        <span class="s-icon">☀️</span>
+        Afternoon Shift
+        <span class="s-time">2:00 PM — 5:00 PM</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- COUNTDOWN -->
+  <div class="card">
+    <div class="card-title">Time Until Your Exam ⏳</div>
+    <div class="countdown-wrap" id="cdWrap">
+      <div class="placeholder">
+        <span>🗓️</span>
+        Pick your exam date &amp; shift above<br/>to start your personal countdown!
+      </div>
+    </div>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="card quote-card" id="quoteCard" style="display:none;">
+    <div class="card-title">Daily Fuel 💫</div>
+    <p class="quote-text" id="quoteText"></p>
+    <p class="quote-attr">— Elon Musk</p>
+  </div>
+
+</div><!-- /page -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-box">
+    <div class="footer-title">🌿 MHT-CET 2026 · Countdown of Confidence</div>
+    <div class="footer-copy">
+      © 2026 Manish Dhangar · All rights reserved<br/>
+      Made with ❤️ by a student, for students · Dhule, Maharashtra, India<br/>
+      <a href="https://t.me/devmanus2025" target="_blank">✈️ @devmanus2025</a>
+      &nbsp;·&nbsp;
+      <span style="opacity:.6;">Not affiliated with State CET Cell, Maharashtra</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ─── DATA ─────────────────────────────────────────────── */
+const DATES = [
+  {label:'11',month:'Apr',full:'2026-04-11'},
+  {label:'12',month:'Apr',full:'2026-04-12'},
+  {label:'13',month:'Apr',full:'2026-04-13'},
+  {label:'14',month:'Apr',full:'2026-04-14'},
+  {label:'15',month:'Apr',full:'2026-04-15'},
+  {label:'16',month:'Apr',full:'2026-04-16'},
+  {label:'17',month:'Apr',full:'2026-04-17'},
+  {label:'18',month:'Apr',full:'2026-04-18'},
+  {label:'19',month:'Apr',full:'2026-04-19'},
+];
+
+const QUOTES = {
+  '2026-04-11':{
+    morning:  "When something is important enough, you do it even if the odds are not in your favor.",
+    afternoon:"Persistence is very important. You should not give up unless you are forced to give up."
+  },
+  '2026-04-12':{
+    morning:  "Failure is an option here. If things are not failing, you are not innovating enough.",
+    afternoon:"I think it is possible for ordinary people to choose to be extraordinary."
+  },
+  '2026-04-13':{
+    morning:  "Work like hell. I mean you just have to put in 80 to 100 hour weeks every week.",
+    afternoon:"The first step is to establish that something is possible; then probability will occur."
+  },
+  '2026-04-14':{
+    morning:  "You get paid in direct proportion to the difficulty of problems you solve.",
+    afternoon:"Brand is just a perception, and perception will match reality over time."
+  },
+  '2026-04-15':{
+    morning:  "Life is too short for long-term grudges.",
+    afternoon:"Some people don't like change, but you need to embrace change if the alternative is disaster."
+  },
+  '2026-04-16':{
+    morning:  "If you're trying to create a company, it's like baking a cake. You have to have all the ingredients in the right proportion.",
+    afternoon:"I say something, and then it usually happens. Maybe not on schedule, but it usually happens."
+  },
+  '2026-04-17':{
+    morning:  "My biggest mistake is probably weighing too much on someone's talent and not enough on their personality.",
+    afternoon:"Really pay attention to negative feedback and solicit it, particularly from friends. Hardly anyone does that, and it's incredibly helpful."
+  },
+  '2026-04-18':{
+    morning:  "There have to be reasons that you get up in the morning and you want to live. What inspires you? What do you love about the future?",
+    afternoon:"I always invest my own money in the companies that I create. I don't believe in just using other people's money."
+  },
+  '2026-04-19':{
+    morning:  "The path to the CEO's office should not be through the CFO's office. It needs to go through engineering and design.",
+    afternoon:"If something is important enough, even if the odds are against you, you should still do it."
+  },
+};
+
+/* ─── STATE ─────────────────────────────────────────────── */
+let selDate  = null;
+let selShift = null;
+let ticker   = null;
+
+/* ─── BUILD DATE GRID ──────────────────────────────────── */
+const grid = document.getElementById('dateGrid');
+DATES.forEach(d => {
+  const btn = document.createElement('button');
+  btn.className = 'date-btn';
+  btn.innerHTML = `<span class="day-num">${d.label}</span>${d.month}`;
+  btn.onclick = () => {
+    selDate = d.full;
+    grid.querySelectorAll('.date-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    startIfReady();
+  };
+  grid.appendChild(btn);
+});
+
+/* ─── SHIFT ─────────────────────────────────────────────── */
+function selectShift(s) {
+  selShift = s;
+  document.getElementById('btnMorning').classList.toggle('active', s==='morning');
+  document.getElementById('btnAfternoon').classList.toggle('active', s==='afternoon');
+  startIfReady();
+}
+
+/* ─── COUNTDOWN ─────────────────────────────────────────── */
+function startIfReady() {
+  if (!selDate || !selShift) return;
+  if (ticker) clearInterval(ticker);
+  showQuote();
+  tick();
+  ticker = setInterval(tick, 1000);
+}
+
+function examStart() {
+  const [y,m,d] = selDate.split('-').map(Number);
+  return new Date(y, m-1, d, selShift==='morning'?9:14, 0, 0);
+}
+function examEnd() {
+  const [y,m,d] = selDate.split('-').map(Number);
+  return new Date(y, m-1, d, selShift==='morning'?12:17, 0, 0);
+}
+
+function tick() {
+  const now   = new Date();
+  const start = examStart();
+  const end   = examEnd();
+  const wrap  = document.getElementById('cdWrap');
+
+  if (now >= end) {
+    wrap.innerHTML = `<div class="status-pill done">🎉 Exam over! Best of luck for your results!</div>`;
+    clearInterval(ticker);
+    return;
+  }
+
+  if (now >= start) {
+    const rem = end - now;
+    const hh  = pad(Math.floor(rem/3600000));
+    const mm  = pad(Math.floor((rem%3600000)/60000));
+    const ss  = pad(Math.floor((rem%60000)/1000));
+    wrap.innerHTML = `
+      <div class="cd-label">⚡ Your Exam is Live Right Now!</div>
+      <div class="time-blocks">
+        ${tb(hh,'Hours')} <div class="t-sep">:</div>
+        ${tb(mm,'Mins')}  <div class="t-sep">:</div>
+        ${tb(ss,'Secs')}
+      </div>
+      <div class="status-pill live">🟢 Stay Calm · Read Carefully · You've Got This!</div>`;
+    return;
+  }
+
+  const diff = start - now;
+  const days = Math.floor(diff/86400000);
+  const hrs  = Math.floor((diff%86400000)/3600000);
+  const mins = Math.floor((diff%3600000)/60000);
+  const secs = Math.floor((diff%60000)/1000);
+
+  // Progress: 0% = 30 days before, 100% = exam time
+  const window30 = 30*24*3600*1000;
+  const elapsed  = window30 - Math.min(diff, window30);
+  const pct      = ((elapsed/window30)*100).toFixed(1);
+
+  const dInfo   = DATES.find(x=>x.full===selDate);
+  const shiftLbl = selShift==='morning'?'🌅 Morning (9 AM)':'☀️ Afternoon (2 PM)';
+
+  wrap.innerHTML = `
+    <div class="cd-label">${dInfo.label} ${dInfo.month} 2026 · ${shiftLbl}</div>
+    <div class="time-blocks">
+      ${tb(pad(days),'Days')}   <div class="t-sep">:</div>
+      ${tb(pad(hrs),'Hours')}   <div class="t-sep">:</div>
+      ${tb(pad(mins),'Mins')}   <div class="t-sep">:</div>
+      ${tb(pad(secs),'Secs')}
+    </div>
+    <div class="prog-wrap"><div class="prog-bar" style="width:${pct}%"></div></div>
+    <div class="status-pill">🌿 Stay consistent · Every second counts · You can do it!</div>`;
+
+  const secEl = wrap.querySelectorAll('.t-num');
+  if (secEl.length) {
+    const last = secEl[secEl.length-1];
+    last.classList.add('tick');
+    setTimeout(()=>last.classList.remove('tick'), 120);
+  }
+}
+
+function tb(val, lbl) {
+  return `<div class="t-block"><div class="t-num">${val}</div><div class="t-lbl">${lbl}</div></div>`;
+}
+function pad(n){ return String(n).padStart(2,'0'); }
+
+/* ─── QUOTE ─────────────────────────────────────────────── */
+function showQuote() {
+  const q = QUOTES[selDate]?.[selShift];
+  if (!q) return;
+  const card = document.getElementById('quoteCard');
+  const txt  = document.getElementById('quoteText');
+  txt.textContent = q;
+  card.style.display = '';
+  card.style.animation = 'slideUp .4s ease';
+}
+
+/* ─── MODALS ────────────────────────────────────────────── */
+function openModal(id)  { document.getElementById(id).classList.remove('hidden'); }
+function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+document.getElementById('modalResources').addEventListener('click', function(e){
+  if (e.target===this) closeModal('modalResources');
+});
+
+/* ─── FLOATING LEAVES ───────────────────────────────────── */
+const EMOJIS = ['🍃','🌿','🍀','🌱','🍂','🌾','☘️','🌻','🌼','🌸'];
+function spawnLeaf(){
+  const wrap = document.getElementById('leavesWrap');
+  const el   = document.createElement('div');
+  el.className   = 'leaf';
+  el.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
+  el.style.left  = (Math.random()*102) + 'vw';
+  const size = .8 + Math.random()*1.5;
+  el.style.fontSize = size + 'rem';
+  const dur = 13 + Math.random()*18;
+  el.style.animationDuration = dur + 's';
+  el.style.animationDelay   = (-Math.random()*dur) + 's';
+  wrap.appendChild(el);
+  setTimeout(()=>el.remove(), (dur+6)*1000);
+}
+for(let i=0;i<20;i++) spawnLeaf();
+setInterval(spawnLeaf, 1600);
+</script>
+</body>
+</html>
